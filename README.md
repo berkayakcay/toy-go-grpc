@@ -39,12 +39,29 @@ where ```${YOUR_MODULE}``` is the name of your go module (you can find that in y
 
 ### Notes
 
-**gRPC force to secure connection**
+#### gRPC force to secure connection
 
 https://grpc.io/docs/guides/auth/
 ```
 Failed to connect: grpc: no transport security set (use grpc.WithTransportCredentials(insecure.NewCredentials()) explicitly or set credentials) 
 ```
+
+#### vscode-proto3 extension configuration
+
+Go into ``settings > Extensions > vscode-proto3 configuration`` and then click ``Edit in settings.json``. (you can just edit ``.vscode/settings.json`` too.)
+
+After that, give ``--proto_path`` options like below codes.
+
+```js
+{
+    "protoc": {
+        "options": [
+            "--proto_path=<path of your proto files>"
+        ]
+    }
+}
+```
+
 
 # Resources
 * https://husobee.github.io/golang/rest/grpc/2016/05/28/golang-rest-v-grpc.html
