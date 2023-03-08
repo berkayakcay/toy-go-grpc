@@ -1,24 +1,12 @@
 # toy-go-grpc
 
+## Getting Started
 
 [gRPC.io > GO > Quick start](https://grpc.io/docs/languages/go/quickstart/)
 ```sh
 brew install protoc-gen-go
 brew install protoc-gen-go-grpc
 ```
-
-
-### gRPC vs REST
-
-|**gRPC**               |**REST** 
-|---	                |---
-|Protocol Buffers   	|JSON
-|HTTP 2   	            |HTTP 1
-|Streaming   	        |Unary
-|Bi directional   	    |Client->Server
-|Free design   	        |GET/POST/UPDATE/DELETE/...
-
-
 
 ### Makefile (Windows)
 
@@ -37,16 +25,50 @@ where ```${YOUR_MODULE}``` is the name of your go module (you can find that in y
 
 
 
-### Notes
+### gRPC vs REST
 
-#### gRPC force to secure connection
+|**gRPC**               |**REST** 
+|---	                |---
+|Protocol Buffers   	|JSON
+|HTTP 2   	            |HTTP 1
+|Streaming   	        |Unary
+|Bi directional   	    |Client->Server
+|Free design   	        |GET/POST/UPDATE/DELETE/...
+
+
+### gRPC Unary
+```proto
+rpc Greet (GreetRequest) returns (GreetResponse);
+```
+
+### gRPC Server Streaming
+```proto
+rpc GreetManyTimes (GreetRequest) returns (stream GreetResponse);
+```
+
+
+### gRPC Client Streaming
+```proto
+rpc LongGreet (stream GreetRequest) returns (GreetResponse);
+```
+
+
+### gRPC Bi-Directional Streaming
+```proto
+rpc GreetEveryone (stream GreetRequest) returns (stream GreetResponse);
+```
+
+
+## Notes
+
+### gRPC force to secure connection
 
 https://grpc.io/docs/guides/auth/
 ```
 Failed to connect: grpc: no transport security set (use grpc.WithTransportCredentials(insecure.NewCredentials()) explicitly or set credentials) 
 ```
 
-#### vscode-proto3 extension configuration
+### vscode-proto3 extension configuration
 
 Go into ``settings > Extensions > vscode-proto3 configuration`` and then click ``Edit in settings.json``. (you can just edit ``.vscode/settings.json`` too.)
 
