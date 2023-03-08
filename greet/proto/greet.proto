@@ -6,7 +6,7 @@ option go_package = "github.com/berkayakcay/toy-go-grpc/greet/proto";
 
 
 
-message GreetRequest {
+message GreetRequest {Ş
     string first_name = 1;
 }
 
@@ -20,5 +20,3 @@ service GreetService {
     rpc LongGreet (stream GreetRequest) returns (GreetResponse);
     rpc GreetEveryone (stream GreetRequest) returns (stream GreetResponse);
 }
-
-<
