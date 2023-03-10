@@ -8,22 +8,6 @@ brew install protoc-gen-go
 brew install protoc-gen-go-grpc
 ```
 
-### Makefile (Windows)
-
-Install Chocolatey (https://chocolatey.org/install)
-
-```sh
-choco install make
-```
-
-You should then be able to use make command in the directory that contains the Makefile.
-
-This is optional, since you can still build the .proto files by hand by running the following commands:
-
-```protoc -I${PROJECT}/proto --go_opt=module=${YOUR_MODULE} --go_out=. ${PROJECT}/proto/*.proto```
-where ```${YOUR_MODULE}``` is the name of your go module (you can find that in your go.mod file) and ```${PROJECT}``` is one of the projects name (greet, calculator, blog).
-
-
 
 ### gRPC vs REST
 
@@ -58,8 +42,79 @@ rpc LongGreet (stream GreetRequest) returns (GreetResponse);
 rpc GreetEveryone (stream GreetRequest) returns (stream GreetResponse);
 ```
 
+### gRPC SSL Options
+
+Generators are in this folder: [SSL](/ssl)
+
+**[NewClientTLSFromFile](/greet/client/main.go)**
+```
+// .......
+
+	tls := true // change that to false if needed
+	opts := []grpc.DialOption{}
+
+	if tls {
+		certFile := "ssl/ca.crt"
+		creds, err := credentials.NewClientTLSFromFile(certFile, "localhost")
+
+		if err != nil {
+			log.Fatalf("Failed loading certificated: %v\n", err)
+		}
+
+		opts = append(opts, grpc.WithTransportCredentials(creds))
+	}
+	conn, err := grpc.Dial(addr, opts...)
+
+// .......
+```
+
+
+
+**[NewServerTLSFromFile](/greet/server/main.go)**
+```
+// .......
+
+	opts := []grpc.ServerOption{}
+	tls := true // change that to false if needed
+
+	if tls {
+		certFile := "ssl/server.crt"
+		keyFile := "ssl/server.pem"
+		creds, err := credentials.NewServerTLSFromFile(certFile, keyFile)
+
+		if err != nil {
+			log.Fatalf("Failed loading certificated: %v\n", err)
+		}
+
+		opts = append(opts, grpc.Creds(creds))
+	}
+
+	log.Printf("Listening on %s\n", addr)
+
+	s := grpc.NewServer(opts...)
+
+// .......
+```
 
 ## Notes
+
+
+### Makefile (Windows)
+
+Install Chocolatey (https://chocolatey.org/install)
+
+```sh
+choco install make
+```
+
+You should then be able to use make command in the directory that contains the Makefile.
+
+This is optional, since you can still build the .proto files by hand by running the following commands:
+
+```protoc -I${PROJECT}/proto --go_opt=module=${YOUR_MODULE} --go_out=. ${PROJECT}/proto/*.proto```
+where ```${YOUR_MODULE}``` is the name of your go module (you can find that in your go.mod file) and ```${PROJECT}``` is one of the projects name (greet, calculator, blog).
+
+
 
 ### gRPC force to secure connection
 
@@ -83,6 +138,8 @@ After that, give ``--proto_path`` options like below codes.
     }
 }
 ```
+
+
 
 
 # Resources
