@@ -139,6 +139,26 @@ After that, give ``--proto_path`` options like below codes.
 }
 ```
 
+### gRPC evans client
+
+[installation](https://github.com/ktr0731/evans#installation)
+
+* Manually gRPC API inspection
+* To automate some tasks by scripting
+
+```
+// .......
+
+	s := grpc.NewServer()
+	pb.RegisterCalculatorServiceServer(s, &Server{})
+	reflection.Register(s)
+
+// .......
+```
+``
+evans --host localhost --post 50051 --reflection
+``
+
 
 
 
@@ -146,3 +166,4 @@ After that, give ``--proto_path`` options like below codes.
 * https://husobee.github.io/golang/rest/grpc/2016/05/28/golang-rest-v-grpc.html
 * https://www.slideshare.net/borisovalex/grpc-vs-rest-let-the-battle-begin-81800634
 * https://learn.microsoft.com/en-us/aspnet/core/grpc/comparison?view=aspnetcore-3.0
+* https://github.com/ktr0731/evans
