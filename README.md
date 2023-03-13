@@ -163,7 +163,10 @@ evans --host localhost --post 50051 --reflection
 
 
 # Resources
+* https://grpc.io/docs/languages/go/quickstart/
 * https://husobee.github.io/golang/rest/grpc/2016/05/28/golang-rest-v-grpc.html
 * https://www.slideshare.net/borisovalex/grpc-vs-rest-let-the-battle-begin-81800634
 * https://learn.microsoft.com/en-us/aspnet/core/grpc/comparison?view=aspnetcore-3.0
 * https://github.com/ktr0731/evans
+* https://github.com/googleapis/googleapis/blob/master/google/pubsub/v1/pubsub.proto
+* https://github.com/googleapis/googleapis/blob/master/google/spanner/v1/spanner.proto
